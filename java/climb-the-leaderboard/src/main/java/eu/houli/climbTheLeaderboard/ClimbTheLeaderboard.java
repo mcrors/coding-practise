@@ -83,20 +83,10 @@ public class ClimbTheLeaderboard
         List<Integer> rankedDeDuped = ranked.stream().distinct().collect(toList());
 
         int playerIdx = 0;
-        int rankedIdx = rankedDeDuped.size()-1;
+        int rankedIdx = rankedDeDuped.size() - 1;
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>(player.size());
         while (playerIdx < player.size()) {
-            if (rankedIdx == 0) {
-                if (player.get(playerIdx) < rankedDeDuped.get(0)) {
-                    result.add(2);
-                } else {
-                    result.add(1);
-                }
-                playerIdx++;
-                continue;
-            }
-
             int playerScore = player.get(playerIdx);
             int rankScore = rankedDeDuped.get(rankedIdx);
 
@@ -104,19 +94,17 @@ public class ClimbTheLeaderboard
                 // add 1 for offset and 1 for being behind the current ranking
                 result.add(rankedIdx + 2);
                 playerIdx++;
-                continue;
-            }
-
-            if (playerScore == rankScore) {
+            } else if (playerScore == rankScore) {
                 // add 1 for offset only
                 result.add(rankedIdx + 1);
                 playerIdx++;
-                continue;
-            }
-
-            if (playerScore > rankScore) {
-                rankedIdx--;
-                continue;
+            } else {
+                if (rankedIdx == 0) {
+                    result.add(1);
+                    playerIdx++;
+                } else {
+                    rankedIdx--;
+                }
             }
         }
         return result;
