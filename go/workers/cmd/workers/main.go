@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 
 	"github.com/mcrors/workers/internal/config"
 )
@@ -9,7 +11,9 @@ import (
 func main() {
 	cfg, err := config.Load("")
 	if err != nil {
-		panic(err)
+		log.Fatalf("config: %v", err)
 	}
-	fmt.Println(cfg)
+
+	mux := http.NewServeMux()
+	if err :=
 }
