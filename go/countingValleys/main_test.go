@@ -22,9 +22,11 @@ var testTable = []struct {
 
 func Test_countingValleys(t *testing.T) {
 	for _, item := range testTable {
-		actual := countingValleys(item.steps, item.path)
-		if actual != item.expected {
-			t.Errorf("wanted: %d. got: %d. %v", item.expected, actual, item)
-		}
+		t.Run(item.path, func(t *testing.T) {
+			actual := countingValleys(item.steps, item.path)
+			if actual != item.expected {
+				t.Errorf("countingValleys(%d, %q) = %d, want %d", item.steps, item.path, actual, item.expected)
+			}
+		})
 	}
 }
